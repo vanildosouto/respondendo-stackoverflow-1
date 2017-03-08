@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Relatório</title>
+  </head>
+  <body>
+    <div class="carregando">
+        Carregando...
+    </div>
+    <table class="relatorio">
+        <tr>
+            <th>ID</th><th>Nome</th><th>Quantidade</th<th>Preço</th>
+        </tr>
+    </table>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $("document").ready(function (){
+            $.ajax({
+                'url': '/dados.php',
+                'method': 'GET',
+                'dataType': 'json',
+                'success': function (jsonResponse) {
+                    var linhas = '';
+                    $.each(jsonResponse, function(key, dado) {
+                        linhas += "<tr><td>" + dado.id + "</td><td>" + dado.nome + "</td><td>" + dado.qtd + "</td><td>" + dado.valor + "</td></tr>";
+                    });
+
+                    $(".carregando").hide();
+                    $(".relatorio").append(linhas);
+                }
+            });
+        });
+    </script>
+  </body>
+</html>
